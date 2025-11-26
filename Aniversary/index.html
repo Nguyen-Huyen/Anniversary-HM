@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Happy 1st Anniversary - Huyên & My</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --color-primary:#8B7355;
+            --color-secondary:#A18C7A;
+            --color-accent:#C9A86C;
+            --color-cream:#FFFEF9;
+            --color-beige:#F5EFE6;
+            --color-sand:#EDE4D7;
+            --color-latte:#E8DFD3;
+            --color-text:#4A4039;
+            --color-text-light:#6B5D4D;
+            --color-white:#FFFFFF;
+            --font-display:'Playfair Display',serif;
+            --font-body:'Inter',sans-serif
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:var(--font-body);color:var(--color-text);background:var(--color-cream);line-height:1.7;overflow-x:hidden}
+        
+        /* ===== MUSIC ===== */
+        .music-player{position:fixed;bottom:25px;right:25px;z-index:9998}
+        .music-btn{width:50px;height:50px;border-radius:50%;background:var(--color-primary);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(139,115,85,0.25);transition:all 0.3s}
+        .music-btn:hover{transform:scale(1.05)}
+        .music-btn.playing{animation:pulse 2s infinite}
+        @keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(139,115,85,0.25)}50%{box-shadow:0 4px 35px rgba(139,115,85,0.4)}}
+        .music-waves{display:none;align-items:flex-end;gap:2px;height:16px}
+        .music-btn.playing .music-waves{display:flex}
+        .music-btn.playing .music-icon-text{display:none}
+        .wave{width:3px;background:white;border-radius:2px;animation:wave 0.8s ease-in-out infinite}
+        .wave:nth-child(1){height:6px;animation-delay:0s}
+        .wave:nth-child(2){height:12px;animation-delay:0.1s}
+        .wave:nth-child(3){height:8px;animation-delay:0.2s}
+        .wave:nth-child(4){height:14px;animation-delay:0.3s}
+        @keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(0.5)}}
+        .music-icon-text{color:white;font-size:1.1rem}
+        
+        /* Popup */
+        .music-popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(74,64,57,0.9);display:flex;align-items:center;justify-content:center;z-index:99999;backdrop-filter:blur(10px)}
+        .music-popup-content{background:var(--color-cream);padding:50px 40px;border-radius:24px;text-align:center;max-width:90%;width:360px;animation:slideUp 0.5s ease}
+        @keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+        .music-popup-title{font-family:var(--font-display);font-size:2.2rem;color:var(--color-primary);margin-bottom:8px}
+        .music-popup-text{font-size:0.95rem;color:var(--color-text-light);margin-bottom:30px}
+        .music-popup-btn{background:var(--color-primary);color:white;border:none;padding:16px 50px;font-size:0.85rem;border-radius:50px;cursor:pointer;font-family:var(--font-body);font-weight:500;letter-spacing:2px;text-transform:uppercase;transition:all 0.3s}
+        .music-popup-btn:hover{background:var(--color-secondary);transform:translateY(-2px)}
+        
+        /* ===== NAV - MINIMAL ===== */
+        .nav{position:fixed;top:0;left:0;width:100%;padding:20px 30px;display:flex;justify-content:space-between;align-items:center;z-index:1000;transition:all 0.4s}
+        .nav.scrolled{background:rgba(255,254,249,0.95);backdrop-filter:blur(10px)}
+        .nav-logo{font-family:var(--font-display);font-size:1.3rem;color:var(--color-primary);text-decoration:none}
+        .nav-dots{display:flex;gap:8px}
+        .nav-dot{width:8px;height:8px;border-radius:50%;background:var(--color-sand);cursor:pointer;transition:all 0.3s}
+        .nav-dot.active,.nav-dot:hover{background:var(--color-primary);transform:scale(1.2)}
+        
+        /* ===== HERO - FULLSCREEN MINIMAL ===== */
+        .hero{
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            position:relative;
+            background:var(--color-cream);
+            padding:20px;
+            overflow:hidden
+        }
+        .hero-bg{
+            position:absolute;
+            top:0;left:0;right:0;bottom:0;
+            background:
+                radial-gradient(ellipse at 0% 0%, var(--color-beige) 0%, transparent 50%),
+                radial-gradient(ellipse at 100% 100%, var(--color-sand) 0%, transparent 50%);
+            opacity:0.6
+        }
+        
+        .hero-content{
+            position:relative;
+            z-index:2;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            text-align:center;
+            max-width:600px
+        }
+        .hero-photo{
+            width:280px;
+            height:350px;
+            border-radius:200px 200px 20px 20px;
+            overflow:hidden;
+            margin-bottom:40px;
+            box-shadow:0 30px 60px rgba(139,115,85,0.15);
+            position:relative
+        }
+        .hero-photo img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            transition:transform 0.5s
+        }
+        .hero-photo:hover img{transform:scale(1.05)}
+        .hero-badge{
+            font-size:0.7rem;
+            letter-spacing:4px;
+            text-transform:uppercase;
+            color:var(--color-accent);
+            margin-bottom:15px
+        }
+        .hero-title{
+            font-family:var(--font-display);
+            font-size:clamp(2.5rem,8vw,4rem);
+            color:var(--color-primary);
+            line-height:1.1;
+            margin-bottom:15px
+        }
+        .hero-couple{
+            font-family:var(--font-display);
+            font-size:clamp(1.5rem,5vw,2rem);
+            color:var(--color-text);
+            font-style:italic;
+            margin-bottom:15px;
+            display:flex;
+            align-items:center;
+            gap:15px
+        }
+        .hero-couple .heart{
+            color:var(--color-accent);
+            animation:heartbeat 1.5s ease infinite
+        }
+        @keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+        .hero-date{
+            font-size:0.8rem;
+            letter-spacing:3px;
+            color:var(--color-text-light);
+            margin-bottom:20px
+        }
+        .hero-scroll{
+            position:absolute;
+            bottom:40px;
+            left:50%;
+            transform:translateX(-50%);
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:8px;
+            color:var(--color-text-light);
+            font-size:0.7rem;
+            letter-spacing:2px;
+            text-transform:uppercase;
+            animation:bounce 2s infinite
+        }
+        @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+        .hero-scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--color-primary),transparent)}
+        
+        /* ===== BENTO GRID - COUNTER & INTRO ===== */
+        .bento-section{
+            padding:100px 20px;
+            background:var(--color-beige)
+        }
+        .bento-grid{
+            max-width:1000px;
+            margin:0 auto;
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            grid-template-rows:auto auto;
+            gap:15px
+        }
+        .bento-item{
+            background:var(--color-cream);
+            border-radius:20px;
+            padding:30px;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            text-align:center;
+            transition:all 0.3s;
+            overflow:hidden;
+            position:relative
+        }
+        .bento-item:hover{transform:translateY(-5px);box-shadow:0 20px 40px rgba(139,115,85,0.1)}
+        
+        /* Bento variations */
+        .bento-item.large{grid-column:span 2;grid-row:span 2;padding:40px}
+        .bento-item.wide{grid-column:span 2}
+        .bento-item.tall{grid-row:span 2}
+        .bento-item.accent{background:var(--color-primary);color:white}
+        .bento-item.accent .bento-label{color:rgba(255,255,255,0.7)}
+        .bento-item.accent .bento-number{color:white}
+        .bento-item.photo{padding:0}
+        .bento-item.photo img{width:100%;height:100%;object-fit:cover}
+        
+        .bento-number{
+            font-family:var(--font-display);
+            font-size:3.5rem;
+            color:var(--color-primary);
+            line-height:1;
+            margin-bottom:5px
+        }
+        .bento-label{
+            font-size:0.7rem;
+            letter-spacing:2px;
+            text-transform:uppercase;
+            color:var(--color-text-light)
+        }
+        .bento-quote{
+            font-family:var(--font-display);
+            font-size:1.4rem;
+            font-style:italic;
+            line-height:1.6
+        }
+        .bento-title{
+            font-family:var(--font-display);
+            font-size:1.8rem;
+            margin-bottom:10px
+        }
+        .bento-text{font-size:0.9rem;color:var(--color-text-light);line-height:1.8}
+        
+        /* ===== CENTRAL TIMELINE ===== */
+        .timeline-section{
+            padding:120px 20px;
+            background:var(--color-cream);
+            position:relative
+        }
+        .timeline-header{
+            text-align:center;
+            margin-bottom:80px
+        }
+        .timeline-subtitle{
+            font-size:0.7rem;
+            letter-spacing:4px;
+            text-transform:uppercase;
+            color:var(--color-accent);
+            margin-bottom:10px
+        }
+        .timeline-title{
+            font-family:var(--font-display);
+            font-size:clamp(2rem,5vw,3rem);
+            color:var(--color-primary)
+        }
+        
+        /* Central line */
+        .timeline{
+            max-width:900px;
+            margin:0 auto;
+            position:relative
+        }
+        .timeline::before{
+            content:'';
+            position:absolute;
+            left:50%;
+            transform:translateX(-50%);
+            top:0;
+            bottom:0;
+            width:2px;
+            background:linear-gradient(to bottom,transparent,var(--color-accent),var(--color-primary),var(--color-accent),transparent)
+        }
+        
+        .timeline-item{
+            display:flex;
+            align-items:center;
+            margin-bottom:80px;
+            position:relative
+        }
+        .timeline-item:last-child{margin-bottom:0}
+        
+        /* Alternating layout */
+        .timeline-item:nth-child(odd){flex-direction:row}
+        .timeline-item:nth-child(even){flex-direction:row-reverse}
+        
+        .timeline-content{
+            width:calc(50% - 50px);
+            background:var(--color-beige);
+            border-radius:20px;
+            padding:30px;
+            position:relative;
+            transition:all 0.3s
+        }
+        .timeline-content:hover{
+            transform:translateY(-5px);
+            box-shadow:0 20px 40px rgba(139,115,85,0.1)
+        }
+        .timeline-item:nth-child(odd) .timeline-content{margin-right:auto;text-align:right}
+        .timeline-item:nth-child(even) .timeline-content{margin-left:auto;text-align:left}
+        
+        .timeline-dot{
+            position:absolute;
+            left:50%;
+            transform:translateX(-50%);
+            width:20px;
+            height:20px;
+            background:var(--color-accent);
+            border-radius:50%;
+            border:4px solid var(--color-cream);
+            box-shadow:0 0 0 4px var(--color-accent);
+            z-index:2
+        }
+        .timeline-dot::before{
+            content:'';
+            position:absolute;
+            top:50%;
+            width:30px;
+            height:2px;
+            background:var(--color-accent)
+        }
+        .timeline-item:nth-child(odd) .timeline-dot::before{left:100%;margin-left:4px}
+        .timeline-item:nth-child(even) .timeline-dot::before{right:100%;margin-right:4px}
+        
+        .timeline-image{
+            width:100%;
+            height:180px;
+            border-radius:12px;
+            overflow:hidden;
+            margin-bottom:20px;
+            background:var(--color-sand)
+        }
+        .timeline-image img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s}
+        .timeline-content:hover .timeline-image img{transform:scale(1.05)}
+        .timeline-image-placeholder{
+            width:100%;
+            height:100%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:2rem;
+            color:var(--color-secondary);
+            opacity:0.3
+        }
+        
+        .timeline-date{
+            font-size:0.7rem;
+            letter-spacing:3px;
+            text-transform:uppercase;
+            color:var(--color-accent);
+            margin-bottom:8px
+        }
+        .timeline-content-title{
+            font-family:var(--font-display);
+            font-size:1.3rem;
+            color:var(--color-primary);
+            margin-bottom:10px
+        }
+        .timeline-desc{
+            font-size:0.9rem;
+            color:var(--color-text-light);
+            line-height:1.8
+        }
+        
+        /* ===== REASONS - BENTO STYLE ===== */
+        .reasons-section{
+            padding:120px 20px;
+            background:var(--color-beige)
+        }
+        .reasons-header{
+            text-align:center;
+            margin-bottom:60px
+        }
+        .reasons-subtitle{
+            font-size:0.7rem;
+            letter-spacing:4px;
+            text-transform:uppercase;
+            color:var(--color-accent);
+            margin-bottom:10px
+        }
+        .reasons-title{
+            font-family:var(--font-display);
+            font-size:clamp(2rem,5vw,3rem);
+            color:var(--color-primary)
+        }
+        
+        .reasons-grid{
+            max-width:900px;
+            margin:0 auto;
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            grid-template-rows:repeat(3,auto);
+            gap:15px
+        }
+        .reason-card{
+            background:var(--color-cream);
+            border-radius:20px;
+            padding:30px 25px;
+            text-align:center;
+            transition:all 0.3s;
+            cursor:pointer;
+            position:relative;
+            overflow:hidden
+        }
+        .reason-card:hover{
+            transform:translateY(-5px);
+            box-shadow:0 20px 40px rgba(139,115,85,0.1)
+        }
+        .reason-card.featured{
+            grid-column:span 2;
+            background:var(--color-primary);
+            color:white;
+            display:flex;
+            flex-direction:column;
+            justify-content:center
+        }
+        .reason-card.featured .reason-title{color:white}
+        .reason-card.featured .reason-desc{color:rgba(255,255,255,0.85)}
+        
+        .reason-icon{font-size:2.5rem;margin-bottom:15px}
+        .reason-number{
+            position:absolute;
+            top:15px;
+            right:15px;
+            font-size:0.7rem;
+            color:var(--color-accent);
+            font-weight:600
+        }
+        .reason-card.featured .reason-number{color:rgba(255,255,255,0.5)}
+        .reason-title{
+            font-family:var(--font-display);
+            font-size:1.1rem;
+            color:var(--color-primary);
+            margin-bottom:10px
+        }
+        .reason-desc{
+            font-size:0.85rem;
+            color:var(--color-text-light);
+            line-height:1.7
+        }
+        
+        /* ===== GALLERY - MASONRY BENTO ===== */
+        .gallery-section{
+            padding:120px 20px;
+            background:var(--color-cream)
+        }
+        .gallery-header{
+            text-align:center;
+            margin-bottom:60px
+        }
+        .gallery-subtitle{
+            font-size:0.7rem;
+            letter-spacing:4px;
+            text-transform:uppercase;
+            color:var(--color-accent);
+            margin-bottom:10px
+        }
+        .gallery-title{
+            font-family:var(--font-display);
+            font-size:clamp(2rem,5vw,3rem);
+            color:var(--color-primary)
+        }
+        
+        .gallery-grid{
+            max-width:900px;
+            margin:0 auto;
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            grid-template-rows:repeat(2,200px);
+            gap:15px
+        }
+        .gallery-item{
+            border-radius:16px;
+            overflow:hidden;
+            cursor:pointer;
+            position:relative;
+            background:var(--color-beige)
+        }
+        .gallery-item:nth-child(1){grid-column:span 2;grid-row:span 2}
+        .gallery-item:nth-child(4){grid-column:span 2}
+        .gallery-item img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            transition:transform 0.5s
+        }
+        .gallery-item:hover img{transform:scale(1.08)}
+        .gallery-placeholder{
+            width:100%;
+            height:100%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:1.5rem;
+            color:var(--color-secondary);
+            opacity:0.3
+        }
+        
+        /* ===== LETTER ===== */
+        .letter-section{
+            padding:120px 20px;
+            background:linear-gradient(180deg,var(--color-beige) 0%,var(--color-cream) 100%);
+            display:flex;
+            justify-content:center
+        }
+        .letter-card{
+            max-width:600px;
+            width:100%;
+            background:var(--color-cream);
+            border-radius:30px;
+            padding:60px 50px;
+            box-shadow:0 30px 80px rgba(139,115,85,0.1);
+            position:relative
+        }
+        .letter-card::before{
+            content:'"';
+            position:absolute;
+            top:30px;
+            left:40px;
+            font-family:var(--font-display);
+            font-size:6rem;
+            color:var(--color-sand);
+            line-height:1
+        }
+        .letter-header{
+            text-align:center;
+            margin-bottom:40px
+        }
+        .letter-subtitle{
+            font-size:0.7rem;
+            letter-spacing:4px;
+            text-transform:uppercase;
+            color:var(--color-accent);
+            margin-bottom:10px
+        }
+        .letter-title{
+            font-family:var(--font-display);
+            font-size:2rem;
+            color:var(--color-primary)
+        }
+        .letter-greeting{
+            font-family:var(--font-display);
+            font-size:1.4rem;
+            color:var(--color-primary);
+            margin-bottom:25px
+        }
+        .letter-body{
+            font-size:1rem;
+            color:var(--color-text-light);
+            line-height:2;
+            margin-bottom:30px
+        }
+        .letter-signature{
+            font-family:var(--font-display);
+            font-size:1.5rem;
+            color:var(--color-primary);
+            text-align:right;
+            font-style:italic
+        }
+        .letter-hearts{
+            display:flex;
+            justify-content:center;
+            gap:20px;
+            margin-top:30px;
+            font-size:1.2rem;
+            opacity:0.5
+        }
+        
+        /* ===== FOOTER ===== */
+        .footer{
+            background:var(--color-primary);
+            color:white;
+            padding:60px 20px;
+            text-align:center
+        }
+        .footer-title{
+            font-family:var(--font-display);
+            font-size:2.5rem;
+            margin-bottom:10px
+        }
+        .footer-couple{
+            font-family:var(--font-display);
+            font-size:1.3rem;
+            opacity:0.9;
+            margin-bottom:10px;
+            font-style:italic
+        }
+        .footer-date{
+            font-size:0.8rem;
+            letter-spacing:3px;
+            opacity:0.7;
+            margin-bottom:25px
+        }
+        .footer-message{
+            font-size:0.95rem;
+            opacity:0.8;
+            max-width:400px;
+            margin:0 auto;
+            font-style:italic
+        }
+        .footer-hearts{
+            margin-top:30px;
+            font-size:1rem;
+            letter-spacing:15px;
+            opacity:0.6
+        }
+        
+        /* ===== LIGHTBOX ===== */
+        .lightbox{
+            display:none;
+            position:fixed;
+            top:0;left:0;
+            width:100%;height:100%;
+            background:rgba(74,64,57,0.95);
+            z-index:9999;
+            align-items:center;
+            justify-content:center
+        }
+        .lightbox.active{display:flex}
+        .lightbox img{max-width:90%;max-height:90%;border-radius:12px}
+        .lightbox-close{
+            position:absolute;
+            top:30px;right:30px;
+            font-size:2rem;
+            color:white;
+            cursor:pointer;
+            opacity:0.7;
+            transition:opacity 0.3s
+        }
+        .lightbox-close:hover{opacity:1}
+        
+        /* ===== RESPONSIVE ===== */
+        @media(max-width:768px){
+            .hero-photo{width:220px;height:280px}
+            
+            .bento-grid{grid-template-columns:repeat(2,1fr)}
+            .bento-item.large{grid-column:span 2;grid-row:span 1}
+            .bento-item.tall{grid-row:span 1}
+            
+            .timeline::before{left:20px}
+            .timeline-item{flex-direction:column!important;padding-left:50px}
+            .timeline-content{width:100%!important;text-align:left!important;margin:0!important}
+            .timeline-dot{left:20px;transform:none}
+            .timeline-dot::before{display:none}
+            
+            .reasons-grid{grid-template-columns:repeat(2,1fr)}
+            .reason-card.featured{grid-column:span 2}
+            
+            .gallery-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,150px)}
+            .gallery-item:nth-child(1){grid-column:span 2;grid-row:span 1}
+            .gallery-item:nth-child(4){grid-column:span 1}
+            
+            .letter-card{padding:40px 30px}
+            .letter-card::before{font-size:4rem;top:20px;left:25px}
+        }
+        
+        @media(min-width:769px){
+            .hero-photo{width:320px;height:400px}
+            .bento-number{font-size:4rem}
+            .timeline-image{height:220px}
+        }
+    </style>
+</head>
+<body>
+    <audio id="bgMusic" loop preload="auto"><source src="love-song.mp3" type="audio/mpeg"></audio>
+    
+    <!-- Music Popup -->
+    <div class="music-popup" id="musicPopup">
+        <div class="music-popup-content">
+            <p class="music-popup-title">Happy Anniversary</p>
+            <p class="music-popup-text">"Một năm bên nhau, và sẽ còn viết tiếp ..."</p>
+            <button class="music-popup-btn" id="startBtn">Open Stories</button>
+        </div>
+    </div>
+    
+    <!-- Music Player -->
+    <div class="music-player">
+        <button class="music-btn" id="musicBtn">
+            <span class="music-icon-text">♫</span>
+            <div class="music-waves"><div class="wave"></div><div class="wave"></div><div class="wave"></div><div class="wave"></div></div>
+        </button>
+    </div>
+    
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">×</span>
+        <img src="" alt="" id="lightboxImg">
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <a href="#" class="nav-logo">H.M - 1st ♥</a>
+        <div class="nav-dots">
+            <div class="nav-dot active" data-section="hero"></div>
+            <div class="nav-dot" data-section="bento"></div>
+            <div class="nav-dot" data-section="timeline"></div>
+            <div class="nav-dot" data-section="reasons"></div>
+            <div class="nav-dot" data-section="gallery"></div>
+            <div class="nav-dot" data-section="letter"></div>
+        </div>
+    </nav>
+    
+    <!-- HERO -->
+    <section class="hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-photo">
+                <img src="photo1.jpg" alt="Us" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23EDE4D7%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 font-size=%2230%22 fill=%22%23A18C7A%22>♥</text></svg>'">
+            </div>
+            <p class="hero-badge">365 Days Together</p>
+            <h1 class="hero-title">Happy 1st<br>Anniversary</h1>
+            <div class="hero-couple">
+                <span>Huyên</span>
+                <span class="heart">♥</span>
+                <span>My</span>
+            </div>
+            <p class="hero-date">24 . 12 . 2024 — 24 . 12 . 2025</p>
+        </div>
+        <div class="hero-scroll">
+            <span>Scroll</span>
+            <div class="hero-scroll-line"></div>
+        </div>
+    </section>
+    
+    <!-- BENTO GRID -->
+    <section class="bento-section" id="bento">
+        <div class="bento-grid">
+            <div class="bento-item">
+                <div class="bento-number" id="years">1</div>
+                <div class="bento-label">Year</div>
+            </div>
+            <div class="bento-item">
+                <div class="bento-number" id="months">12</div>
+                <div class="bento-label">Months</div>
+            </div>
+            <div class="bento-item large photo">
+                <img src="photo2.jpg" alt="Memory" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23EDE4D7%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 font-size=%2220%22 fill=%22%23A18C7A%22>✦</text></svg>'">
+            </div>
+            <div class="bento-item">
+                <div class="bento-number" id="days">365</div>
+                <div class="bento-label">Days</div>
+            </div>
+            <div class="bento-item accent">
+                <div class="bento-number" id="hours">8760</div>
+                <div class="bento-label">Hours</div>
+            </div>
+            <div class="bento-item wide">
+                <div class="bento-quote">"Mỗi khoảng khắc bên em đều là kỉ niệm đẹp <br>
+				Every moment with you is a beautiful memory"</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CENTRAL TIMELINE -->
+    <section class="timeline-section" id="timeline">
+        <div class="timeline-header">
+            <p class="timeline-subtitle">Our Story</p>
+            <h2 class="timeline-title">How It All Began</h2>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-image">
+                        <img src="story1.jpg" alt="First Meet" onerror="this.outerHTML='<div class=timeline-image-placeholder>✦</div>'">
+                    </div>
+                    <p class="timeline-date">The Beginning</p>
+                    <h3 class="timeline-content-title">Lần đầu gặp gỡ</h3>
+                    <p class="timeline-desc">Từ giây phút đầu tiên nhìn thấy em, chị đã bị ấn tượng với vẻ cá tính bên ngoài nhưng trẻ con khi em cất lời. Bất chợt đôi môi tự mỉm cười và quay đi</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-image">
+                        <img src="story2.jpg" alt="Conversations" onerror="this.outerHTML='<div class=timeline-image-placeholder>✦</div>'">
+                    </div>
+                    <p class="timeline-date">Getting Closer</p>
+                    <h3 class="timeline-content-title">Những cuộc trò chuyện</h3>
+                    <p class="timeline-desc">Mỗi tin nhắn, mỗi lý do để mượn cớ gặp em dưới quán nước đều khiến chị mong chờ. Chị thích được nghe em gọi, được thấy em cười và đứng phía sau chị nhưng lại phải giả vờ mọi thứ như bình thường.Chị thích nhìn mọi thứ về em.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-image">
+                        <img src="story3.jpg" alt="Together" onerror="this.outerHTML='<div class=timeline-image-placeholder>✦</div>'">
+                    </div>
+                    <p class="timeline-date">Official</p>
+                    <h3 class="timeline-content-title">Chính thức đông ý</h3>
+                    <p class="timeline-desc">Ngày chị ngỏ lời em làm bạn gái chị, em gật đầu đồng ý, lúc ấy chị là người hạnh phúc nhất thế gian. Nhưng sau này chị mới biết là em không hiểu lời ngỏ của chị :((((</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-image">
+                        <img src="story4.jpg" alt="1 Year" onerror="this.outerHTML='<div class=timeline-image-placeholder>✦</div>'">
+                    </div>
+                    <p class="timeline-date">Today</p>
+                    <h3 class="timeline-content-title">1 Năm yêu thương</h3>
+                    <p class="timeline-desc">365 ngày không phải là quá dài cũng không phải ngắn nhưng cũng đủ để chúng ta cảm nhận được bản thân cũng như tình yêu dành cho nhau. Happy Anniversary, my love!</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- REASONS BENTO -->
+    <section class="reasons-section" id="reasons">
+        <div class="reasons-header">
+            <p class="reasons-subtitle">Why You</p>
+            <h2 class="reasons-title">Reasons I Love You</h2>
+        </div>
+        <div class="reasons-grid">
+            <div class="reason-card">
+                <span class="reason-number">01</span>
+                <div class="reason-icon">🌸</div>
+                <h3 class="reason-title">Nụ cười của em</h3>
+                <p class="reason-desc">Mỗi khi nhìn thấy em cười, chị cũng cảm thấy bản thân vui theo </p>
+            </div>
+            <div class="reason-card featured">
+                <span class="reason-number">∞</span>
+                <div class="reason-icon">♥</div>
+                <h3 class="reason-title">Vì em là em</h3>
+                <p class="reason-desc">Mặc dù rất hay cáu gắt với chị nhưng chị biết "Em hoàn hảo theo cách của em". That's real love.</p>
+            </div>
+            <div class="reason-card">
+                <span class="reason-number">02</span>
+                <div class="reason-icon">🍜</div>
+                <h3 class="reason-title">Đi ăn cùng em</h3>
+                <p class="reason-desc">Em là lý do chị tăng ký liên tục :))!</p>
+            </div>
+            <div class="reason-card">
+                <span class="reason-number">03</span>
+                <div class="reason-icon">💬</div>
+                <h3 class="reason-title">Câu chuyện thường ngày em kể</h3>
+                <p class="reason-desc">Rất không hay kể chuyện nhưng em đã chịu kể những câu chuyện rất thường ngày của em khi mình bên cạnh</p>
+            </div>
+			 <div class="reason-card">
+                <span class="reason-number">04</span>
+                <div class="reason-icon">🎮</div>
+                <h3 class="reason-title">Chơi game cùng em</h3>
+                <p class="reason-desc">Nhìn em chơi các trò chơi của các em bé tiểu học và cầu cứu chị giúp</p>
+            </div>
+            <div class="reason-card">
+                <span class="reason-number">05</span>
+                <div class="reason-icon">☀️</div>
+                <h3 class="reason-title">Sáng Chủ nhật</h3>
+                <p class="reason-desc">Ôm em ngủ thêm 5 phút = hạnh phúc</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- GALLERY BENTO -->
+    <section class="gallery-section" id="gallery">
+        <div class="gallery-header">
+            <p class="gallery-subtitle">Memories</p>
+            <h2 class="gallery-title">Our Moments</h2>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="memory1.jpg" alt="Memory" onerror="this.outerHTML='<div class=gallery-placeholder>✦</div>'"></div>
+            <div class="gallery-item"><img src="memory2.jpg" alt="Memory" onerror="this.outerHTML='<div class=gallery-placeholder>✦</div>'"></div>
+            <div class="gallery-item"><img src="memory3.jpg" alt="Memory" onerror="this.outerHTML='<div class=gallery-placeholder>✦</div>'"></div>
+            <div class="gallery-item"><img src="memory4.jpg" alt="Memory" onerror="this.outerHTML='<div class=gallery-placeholder>✦</div>'"></div>
+            <div class="gallery-item"><img src="memory5.jpg" alt="Memory" onerror="this.outerHTML='<div class=gallery-placeholder>✦</div>'"></div>
+            <div class="gallery-item"><img src="memory6.jpg" alt="Memory" onerror="this.outerHTML='<div class=gallery-placeholder>✦</div>'"></div>
+			<div class="gallery-item"><img src="memory7.jpg" alt="Memory" onerror="this.outerHTML='<div class=gallery-placeholder>✦</div>'"></div>
+            <div class="gallery-item"><img src="memory8.jpg" alt="Memory" onerror="this.outerHTML='<div class=gallery-placeholder>✦</div>'"></div>
+			<div class="gallery-item"><img src="memory9.jpg" alt="Memory" onerror="this.outerHTML='<div class=gallery-placeholder>✦</div>'"></div>
+            <div class="gallery-item"><img src="memory10.jpg" alt="Memory" onerror="this.outerHTML='<div class=gallery-placeholder>✦</div>'"></div>
+			<div class="gallery-item"><img src="memory11.jpg" alt="Memory" onerror="this.outerHTML='<div class=gallery-placeholder>✦</div>'"></div>
+            <div class="gallery-item"><img src="memory12.jpg" alt="Memory" onerror="this.outerHTML='<div class=gallery-placeholder>✦</div>'"></div>
+        </div>
+    </section>
+    
+    <!-- LETTER -->
+    <section class="letter-section" id="letter">
+        <div class="letter-card">
+            <div class="letter-header">
+                <p class="letter-subtitle">For You</p>
+                <h2 class="letter-title">Love Letter</h2>
+            </div>
+            <p class="letter-greeting">Embeiu,</p>
+            <p class="letter-body">
+                Một năm trước, chị không ngờ cuộc sống sẽ thay đổi nhiều đến vậy. Từ ngày có em, mỗi sáng thức dậy đều thấy lười làm để được ôm em ngủ thêm một tí :)).
+                <br><br>
+                Cảm ơn em vì đã cố gắng cùng nhau, bao dung với tất cả những điều chưa được hoàn hảo của nhau. Tuy chị không nói ra nhưng những thay đổi của em chị đều nhìn thấy được. Và chị cũng muốn em biết rằng đến thời điểm hiện tại, tình cảm chị dành cho em vẫn như những ngày đầu, vẫn em yêu không điều kiện. Em không chỉ là người yêu, em còn là người để chị cố gắng nhiều hơn.
+                <br><br>
+                Happy 1st Anniversary! Chị hứa sẽ yêu em nhiều hơn mỗi ngày. Em là người chị muốn đồng hành đến cuối con đường.
+            </p>
+            <p class="letter-signature">Forever yours ♥</p>
+            <div class="letter-hearts">
+                <span>♥</span>
+                <span>♥</span>
+                <span>♥</span>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <h2 class="footer-title">Happy Anniversary</h2>
+        <p class="footer-couple">Huyên & My</p>
+        <p class="footer-date">24 . 12 . 2024 — 24 . 12 . 2025</p>
+        <p class="footer-message">"One year of loving you, and a lifetime more to go"</p>
+        <p class="footer-hearts">♥ ♥ ♥</p>
+    </footer>
+    
+    <script>
+    // Music
+    var isPlaying=false,bgMusic=document.getElementById('bgMusic'),musicBtn=document.getElementById('musicBtn'),startBtn=document.getElementById('startBtn'),musicPopup=document.getElementById('musicPopup');
+    bgMusic.load();
+    startBtn.onclick=function(e){e.preventDefault();musicPopup.style.display='none';bgMusic.play().then(function(){musicBtn.classList.add('playing');isPlaying=true}).catch(function(){})};
+    musicBtn.onclick=function(){if(isPlaying){bgMusic.pause();musicBtn.classList.remove('playing');isPlaying=false}else{bgMusic.play().then(function(){musicBtn.classList.add('playing');isPlaying=true}).catch(function(){})}};
+    
+    // Nav scroll
+    window.onscroll=function(){document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50)};
+    
+    // Nav dots
+    var dots=document.querySelectorAll('.nav-dot');
+    dots.forEach(function(dot){
+        dot.onclick=function(){
+            var section=document.getElementById(this.dataset.section);
+            if(section)window.scrollTo({top:section.offsetTop-60,behavior:'smooth'})
+        }
+    });
+    
+    // Counter
+    function updateCounter(){
+        var start=new Date('December 24, 2024').getTime(),now=Date.now(),diff=now-start;
+        document.getElementById('years').textContent=Math.floor(diff/31536000000);
+        document.getElementById('months').textContent=Math.floor(diff/2592000000);
+        document.getElementById('days').textContent=Math.floor(diff/86400000);
+        document.getElementById('hours').textContent=Math.floor(diff/3600000).toLocaleString()
+    }
+    updateCounter();setInterval(updateCounter,60000);
+    
+    // Lightbox
+    document.querySelectorAll('.gallery-item img, .timeline-image img, .bento-item.photo img, .hero-photo img').forEach(function(img){
+        img.onclick=function(){
+            if(this.src&&!this.src.includes('data:image')){
+                document.getElementById('lightboxImg').src=this.src;
+                document.getElementById('lightbox').classList.add('active')
+            }
+        }
+    });
+    document.getElementById('lightboxClose').onclick=function(){document.getElementById('lightbox').classList.remove('active')};
+    document.getElementById('lightbox').onclick=function(e){if(e.target===this)this.classList.remove('active')};
+    
+    // Scroll spy for nav dots
+    var sections=['hero','bento','timeline','reasons','gallery','letter'];
+    window.addEventListener('scroll',function(){
+        var scrollPos=window.scrollY+200;
+        sections.forEach(function(id,i){
+            var section=document.getElementById(id);
+            if(section&&scrollPos>=section.offsetTop&&scrollPos<section.offsetTop+section.offsetHeight){
+                dots.forEach(function(d,j){d.classList.toggle('active',i===j)})
+            }
+        })
+    })
+    </script>
+</body>
+</html>
