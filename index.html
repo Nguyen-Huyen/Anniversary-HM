@@ -595,7 +595,21 @@
             letter-spacing:15px;
             opacity:0.6
         }
-        
+        /* ===== FOOTER CREDIT ===== */
+		.footer-credit{
+			margin-top:30px;
+			padding-top:20px;
+			border-top:1px solid rgba(255,255,255,0.1);
+			font-size:0.7rem;
+			opacity:0.5;
+			letter-spacing:1px
+		}
+		.footer-credit a{
+			color:var(--color-gold);
+			text-decoration:none;
+			transition:opacity 0.3s
+		}
+		.footer-credit a:hover{opacity:1}
         /* ===== LIGHTBOX ===== */
         .lightbox{
             display:none;
@@ -659,7 +673,7 @@
     <div class="music-popup" id="musicPopup">
         <div class="music-popup-content">
             <p class="music-popup-title">Happy Anniversary</p>
-            <p class="music-popup-text">"Một năm bên cạnh nhau, và sẽ còn viết tiếp năm sau này ..."</p>
+            <p class="music-popup-text">"Một năm bên nhau, và sẽ còn viết tiếp năm sau này ..."</p>
             <button class="music-popup-btn" id="startBtn">Open Stories</button>
         </div>
     </div>
@@ -701,11 +715,11 @@
             <p class="hero-badge">365 Days Together</p>
             <h1 class="hero-title">Happy 1st<br>Anniversary</h1>
             <div class="hero-couple">
-                <span>Huyên</span>
-                <span class="heart">♥</span>
                 <span>My</span>
+                <span class="heart">♥</span>
+                <span>Huyên</span>
             </div>
-            <p class="hero-date">24 . 12 . 2024 — 24 . 12 . 2025</p>
+            <p class="hero-date">24 . 01 . 2025 — 24 . 01 . 2026</p>
         </div>
         <div class="hero-scroll">
             <span>Scroll</span>
@@ -756,7 +770,7 @@
                     </div>
                     <p class="timeline-date">The Beginning</p>
                     <h3 class="timeline-content-title">Lần đầu gặp gỡ</h3>
-                    <p class="timeline-desc">Từ giây phút đầu tiên nhìn thấy em, chị đã bị ấn tượng với vẻ cá tính bên ngoài nhưng trẻ con khi em cất lời. Bất chợt đôi môi tự mỉm cười và quay đi</p>
+                    <p class="timeline-desc">Từ giây phút đầu tiên nhìn thấy em, chị đã bị ấn tượng với vẻ cá tính bên ngoài nhưng trẻ con khi em cất lời. Bất chợt đôi môi tự mỉm cười và phải quay đi. Thật may là chị cũng đã lọt được vào mắt em.</p>
                 </div>
                 <div class="timeline-dot"></div>
             </div>
@@ -767,7 +781,7 @@
                     </div>
                     <p class="timeline-date">Getting Closer</p>
                     <h3 class="timeline-content-title">Những cuộc trò chuyện</h3>
-                    <p class="timeline-desc">Mỗi tin nhắn, mỗi lý do để mượn cớ gặp em dưới quán nước đều khiến chị mong chờ. Chị thích được nghe em gọi, được thấy em cười và đứng phía sau chị nhưng lại phải giả vờ mọi thứ như bình thường.Chị thích nhìn mọi thứ về em.</p>
+                    <p class="timeline-desc">Mỗi tin nhắn, mỗi lý do để mượn cớ gặp em dưới quán nước đều khiến chị mong chờ. Chị thích được nghe em gọi, được thấy em cười và đứng phía sau chị nhưng lại phải giả vờ mọi thứ như bình thường. Chị thích nhìn mọi thứ về em.</p>
                 </div>
                 <div class="timeline-dot"></div>
             </div>
@@ -777,8 +791,8 @@
                         <img src="story3.jpg" alt="Together" onerror="this.outerHTML='<div class=timeline-image-placeholder>✦</div>'">
                     </div>
                     <p class="timeline-date">Official</p>
-                    <h3 class="timeline-content-title">Chính thức đông ý</h3>
-                    <p class="timeline-desc">Ngày chị ngỏ lời em làm bạn gái chị, em gật đầu đồng ý, lúc ấy chị là người hạnh phúc nhất thế gian. Nhưng sau này chị mới biết là em không hiểu lời ngỏ của chị :((((</p>
+                    <h3 class="timeline-content-title">Chính thức đồng ý</h3>
+                    <p class="timeline-desc">Ngày chị ngỏ lời em làm bạn gái chị, em gật đầu và nở nụ cười đồng ý, lúc ấy chị là người hạnh phúc nhất. Nhưng sau này chị mới biết là em không hiểu lời ngỏ của chị :((((</p>
                 </div>
                 <div class="timeline-dot"></div>
             </div>
@@ -813,7 +827,7 @@
                 <span class="reason-number">∞</span>
                 <div class="reason-icon">♥</div>
                 <h3 class="reason-title">Vì em là em</h3>
-                <p class="reason-desc">Mặc dù rất hay cáu gắt với chị nhưng chị biết "Em hoàn hảo theo cách của em". That's real love.</p>
+                <p class="reason-desc">Mặc dù rất hay cáu gắt, ăn hiếp chị nhưng chị biết "Em hoàn hảo theo cách của em". That's real love.</p>
             </div>
             <div class="reason-card">
                 <span class="reason-number">02</span>
@@ -825,19 +839,19 @@
                 <span class="reason-number">03</span>
                 <div class="reason-icon">💬</div>
                 <h3 class="reason-title">Câu chuyện thường ngày em kể</h3>
-                <p class="reason-desc">Rất không hay kể chuyện nhưng em đã chịu kể những câu chuyện rất thường ngày của em khi mình bên cạnh</p>
+                <p class="reason-desc">Trước đây em không hay kể chuyện nhưng em đã chủ động kể những câu chuyện rất thường ngày của em khi mình bên cạnh</p>
             </div>
 			 <div class="reason-card">
                 <span class="reason-number">04</span>
                 <div class="reason-icon">🎮</div>
                 <h3 class="reason-title">Chơi game cùng em</h3>
-                <p class="reason-desc">Nhìn em chơi các trò chơi của các em bé tiểu học và cầu cứu chị giúp</p>
+                <p class="reason-desc">Nhìn em chơi các trò chơi của các em bé tiểu học và cầu cứu chị giúp, đúng là em bé của chị</p>
             </div>
             <div class="reason-card">
                 <span class="reason-number">05</span>
                 <div class="reason-icon">☀️</div>
-                <h3 class="reason-title">Sáng Chủ nhật</h3>
-                <p class="reason-desc">Ôm em ngủ thêm 5 phút = hạnh phúc</p>
+                <h3 class="reason-title">Ngủ nướng</h3>
+                <p class="reason-desc">Ôm em ngủ thêm 5 phút = hạnh phúc, nên lúc nào cũng chỉ muốn được ôm em thêm</p>
             </div>
         </div>
     </section>
@@ -891,10 +905,11 @@
     <!-- FOOTER -->
     <footer class="footer">
         <h2 class="footer-title">Happy Anniversary</h2>
-        <p class="footer-couple">Huyên & My</p>
-        <p class="footer-date">24 . 12 . 2024 — 24 . 12 . 2025</p>
+        <p class="footer-couple">My & Huyên</p>
+        <p class="footer-date">24 . 01 . 2025 — 24 . 01 . 2026</p>
         <p class="footer-message">"One year of loving you, and a lifetime more to go"</p>
         <p class="footer-hearts">♥ ♥ ♥</p>
+	<p class="footer-credit">Thiết kế và phát triển bởi <a href="#">Huyên Nguyễn</a></p>
     </footer>
     
     <script>
@@ -918,7 +933,7 @@
     
     // Counter
     function updateCounter(){
-        var start=new Date('December 24, 2024').getTime(),now=Date.now(),diff=now-start;
+        var start=new Date('January 24, 2025').getTime(),now=Date.now(),diff=now-start;
         document.getElementById('years').textContent=Math.floor(diff/31536000000);
         document.getElementById('months').textContent=Math.floor(diff/2592000000);
         document.getElementById('days').textContent=Math.floor(diff/86400000);
